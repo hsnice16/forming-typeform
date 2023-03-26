@@ -1,0 +1,1 @@
+export { questrialFont } from "./questrialFont";

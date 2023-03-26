@@ -1,0 +1,13 @@
+.question-box__heading {
+  color: var(--btn-text-color);
+  font-size: 2.4rem;
+  font-weight: unset;
+  margin-top: -25px;
+}
+
+@media screen and (max-width: 599px) {
+  .question-box__heading {
+    line-height: 1.35em;
+    margin-top: -15px;
+  }
+}
