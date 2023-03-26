@@ -1,0 +1,23 @@
+.progress-bar__path {
+  animation: grow-right 0.5s ease-out 1 forwards;
+  background-color: rgba(0, 119, 255, 0.3);
+  height: 4px;
+}
+
+@keyframes grow-right {
+  from {
+    opacity: 0;
+    width: 0;
+  }
+
+  to {
+    opacity: 1;
+    width: 100%;
+  }
+}
+
+.progress-bar {
+  background-color: var(--primary-color);
+  height: 100%;
+  width: 0;
+}

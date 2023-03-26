@@ -1,0 +1,52 @@
+.btn-container {
+  align-items: center;
+  display: flex;
+  gap: 12.5px;
+  margin-top: 32px;
+  width: 100%;
+}
+
+.btn-container > button {
+  background-color: var(--primary-color);
+  border: thin solid transparent;
+  border-radius: 5px;
+  color: var(--btn-text-color);
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 10px 14px;
+}
+
+.btn-container > button:hover {
+  background-color: var(--primary-light-color);
+}
+
+.btn-container > button:active {
+  background-color: var(--primary-dark-color);
+}
+
+.btn-container > button:focus-visible {
+  outline: none;
+}
+
+.btn-container > span {
+  color: var(--btn-text-color);
+  font-size: 1.25rem;
+}
+
+.btn-container > span strong {
+  font-weight: bolder;
+  letter-spacing: 0.04em;
+}
+
+@media screen and (max-width: 599px) {
+  .btn-container {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 17.5px;
+  }
+
+  .btn-container > span {
+    font-size: 1.5rem;
+  }
+}
