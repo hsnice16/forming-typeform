@@ -1,0 +1,27 @@
+.question-box__heading.num {
+  position: relative;
+}
+
+.question-box__heading.num > span {
+  font-size: 16px;
+  margin-left: -36px;
+  margin-top: 5px;
+  position: absolute;
+}
+
+.question-box__heading.num > span > img {
+  margin-bottom: -3px;
+}
+
+@media screen and (max-width: 599px) {
+  .question-box__heading.num > span {
+    font-size: 14px;
+    margin-left: -26px;
+    margin-top: 0;
+  }
+
+  .question-box__heading.num > span > img {
+    height: 14px;
+    width: 12px;
+  }
+}

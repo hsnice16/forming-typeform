@@ -1,8 +1,14 @@
 import styles from "./BtnContainer.module.css";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { questrialFont } from "@/utils";
+import classNames from "classnames";
 
-export function BtnContainer() {
+type BtnContainerProps = {
+  readonly children: ReactNode;
+  readonly className?: string;
+};
+
+export function BtnContainer({ children, className }: BtnContainerProps) {
   const [isOnMobile, setIsOnMobile] = useState(false);
 
   useEffect(() => {
@@ -22,8 +28,8 @@ export function BtnContainer() {
   }, []);
 
   return (
-    <div className={styles["btn-container"]}>
-      <button className={questrialFont.className}>I agree</button>
+    <div className={classNames(styles["btn-container"], className)}>
+      <button className={questrialFont.className}>{children}</button>
       {isOnMobile || (
         <span>
           press <strong>Enter ↵</strong>

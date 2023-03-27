@@ -2,15 +2,41 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import { questrialFont } from "@/utils";
-import {
-  BtnContainer,
-  ProgressBar,
-  QuestionBox,
-  QuestionBoxHeading,
-  QuestionBoxPara,
-} from "@/components";
+import { ProgressBar, QuestionOne, QuestionZero } from "@/components";
+import classNames from "classnames";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [questionNum, setQuestionNum] = useState<{
+    prev: null | number;
+    now: number;
+  }>({
+    prev: null,
+    now: 0,
+  });
+  const { prev, now } = questionNum;
+
+  useEffect(() => {
+    function handleKeypress(event: KeyboardEvent) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        setQuestionNum((prevValue) =>
+          prevValue.now + 1 >= 2
+            ? { ...prevValue }
+            : { prev: prevValue.now, now: prevValue.now + 1 }
+        );
+      }
+    }
+
+    document.addEventListener("keypress", handleKeypress);
+
+    return function () {
+      document.removeEventListener("keypress", handleKeypress);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Head>
@@ -30,25 +56,25 @@ export default function Home() {
           height={24}
         />
       </header>
-      <main className={`${styles.main} ${questrialFont.className}`}>
+      <main className={classNames(styles.main, questrialFont.className)}>
         <section>
           <div>
-            <QuestionBox>
-              <QuestionBoxHeading>
-                Up-skilling requires time commitment
-              </QuestionBoxHeading>
-              <QuestionBoxPara>
-                The GrowthX experience is designed by keeping in mind the
-                working hours founders &amp; full time operators typically work
-                in.
-                <br />
-                <br />
-                You will spend
-                <br />- 6 hours/week for the first 5 weeks
-                <br />- 15 hours/week for the last 3 weeks
-              </QuestionBoxPara>
-              <BtnContainer />
-            </QuestionBox>
+            {[now - 1, now].includes(0) && (
+              <QuestionZero
+                outView={now - 1 === 0}
+                outViewSlide="up"
+                inView={now === 0}
+                inViewSlide={prev === 1 ? "up" : ""}
+              />
+            )}
+            {prev !== null && [now - 1, now, now + 1].includes(1) && (
+              <QuestionOne
+                outView={[now - 1, now + 1].includes(1)}
+                outViewSlide={now - 1 === 1 ? "up" : "down"}
+                inView={now === 1}
+                inViewSlide={"up"}
+              />
+            )}
           </div>
         </section>
       </main>

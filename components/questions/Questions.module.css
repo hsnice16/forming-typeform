@@ -1,0 +1,108 @@
+.btn-container.ok {
+  margin-top: 15px;
+}
+
+.btn-container.ok > button {
+  padding-right: 38px;
+  position: relative;
+}
+
+.btn-container > button > img {
+  margin-left: -1px;
+  margin-top: -6px;
+  position: absolute;
+}
+
+@media screen and (max-width: 599px) {
+  .btn-container.ok {
+    margin-top: 22px;
+  }
+}
+
+/* animation */
+
+.slide-in,
+.slide-out {
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.slide-in {
+  animation-timing-function: ease-out;
+}
+
+.slide-in.in-view__up {
+  animation-name: in-up;
+}
+
+@keyframes in-up {
+  from {
+    transform: translateY(100vh);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slide-in.in-view__down {
+  animation-name: in-down;
+}
+
+@keyframes in-down {
+  from {
+    transform: translateY(-100vh);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.slide-out {
+  animation-timing-function: linear;
+  pointer-events: none;
+}
+
+.slide-out.out-view__up {
+  animation-name: out-up;
+}
+
+@keyframes out-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  to {
+    height: 0;
+    opacity: 0;
+    transform: translateY(-100vh);
+  }
+}
+
+.slide-out.out-view__down {
+  animation-name: out-down;
+}
+
+@keyframes out-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  to {
+    height: 0;
+    opacity: 0;
+    transform: translateY(100vh);
+  }
+}
