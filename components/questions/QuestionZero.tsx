@@ -7,7 +7,7 @@ import {
 import classNames from "classnames";
 import styles from "./Questions.module.css";
 
-export type QuestionsProps = {
+export type QuestionProps = {
   readonly inView?: boolean;
   readonly inViewSlide?: "up" | "down" | "";
   readonly outView?: boolean;
@@ -19,7 +19,7 @@ export function QuestionZero({
   inViewSlide,
   outView,
   outViewSlide,
-}: QuestionsProps) {
+}: QuestionProps) {
   return (
     <QuestionBox
       className={classNames({
@@ -43,7 +43,7 @@ export function QuestionZero({
         <br />- 6 hours/week for the first 5 weeks
         <br />- 15 hours/week for the last 3 weeks
       </QuestionBoxPara>
-      <BtnContainer>I agree</BtnContainer>
+      <BtnContainer showPressEnter={true}>I agree</BtnContainer>
     </QuestionBox>
   );
 }

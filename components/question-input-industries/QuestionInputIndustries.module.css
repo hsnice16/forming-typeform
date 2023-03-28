@@ -1,0 +1,120 @@
+.dropdown-select__industries {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-select__industries .dropdown-select__input {
+  margin-top: 32px;
+  padding-right: 32px;
+}
+
+.dropdown-select__btn {
+  background: transparent;
+  border: none;
+  bottom: 4px;
+  cursor: pointer;
+  position: absolute;
+  right: 2px;
+  transform: rotate(-90deg);
+  transition: transform 0.5s;
+}
+
+.dropdown-select__btn.close {
+  transform: rotate(90deg);
+}
+
+.dropdown-select__options {
+  background-color: var(--body-background-color);
+  left: -10px;
+  margin-top: 8px;
+  max-height: 0;
+  overflow-y: scroll;
+  padding: 0 1rem;
+  position: absolute;
+  transition: max-height 0.2s;
+  width: calc(100% + 2rem);
+  z-index: 1;
+}
+
+.dropdown-select__options::-webkit-scrollbar {
+  display: none;
+}
+
+.dropdown-select__options.show {
+  border-bottom: thin dashed var(--btn-text-color);
+  max-height: 43.5vh;
+}
+
+.dropdown-select__option {
+  align-items: center;
+  background-color: var(--dropdown-background-color);
+  border: thin solid var(--para-text-color);
+  border-radius: 4px;
+  color: var(--btn-text-color);
+  cursor: pointer;
+  display: flex;
+  font-size: 2rem;
+  margin-bottom: 5px;
+  min-height: 40px;
+  padding: 0 8px;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.dropdown-select__option:hover {
+  background-color: var(--placeholder-color);
+}
+
+.dropdown-select__option > img {
+  margin-left: auto;
+}
+
+.dropdown-select__option.selected {
+  border: 1.75px solid var(--btn-text-color);
+}
+
+.dropdown-select__option.animate {
+  animation: twinkle 0.3s linear 2;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .dropdown-select__options.show {
+    max-height: 42vh;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .dropdown-select__options {
+    left: -8px;
+  }
+
+  .dropdown-select__options.show {
+    max-height: 47.5vh;
+  }
+
+  .dropdown-select__option {
+    font-size: 1.9rem;
+  }
+}
+
+@media screen and (max-width: 475px) {
+  .dropdown-select__options.show {
+    max-height: 46vh;
+  }
+}
+
+@media screen and (max-width: 395px) {
+  .dropdown-select__options.show {
+    max-height: 43.5vh;
+  }
+}

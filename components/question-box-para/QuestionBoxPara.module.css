@@ -5,3 +5,9 @@
   line-height: 1.4em;
   margin-top: 12px;
 }
+
+@media screen and (max-width: 599px) {
+  .question-box__para {
+    font-size: 1.9rem;
+  }
+}

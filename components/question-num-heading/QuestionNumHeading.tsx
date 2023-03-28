@@ -2,14 +2,23 @@ import { QuestionBoxHeading } from "../index";
 import classNames from "classnames";
 import styles from "./QuestionNumHeading.module.css";
 import Image from "next/image";
+import { ReactNode } from "react";
 
-export function QuestionNumHeading() {
+type QuestionNumHeadingProps = {
+  readonly children: ReactNode;
+  readonly questionNum: number;
+};
+
+export function QuestionNumHeading({
+  children,
+  questionNum,
+}: QuestionNumHeadingProps) {
   return (
     <QuestionBoxHeading
       className={classNames(styles["question-box__heading"], styles["num"])}
     >
       <span>
-        1
+        {questionNum}
         <Image
           src="./right-arrow.svg"
           alt="right arrow"
@@ -17,7 +26,7 @@ export function QuestionNumHeading() {
           height={16}
         />
       </span>
-      What&apos;s your first name? *
+      {children}
     </QuestionBoxHeading>
   );
 }
