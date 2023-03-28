@@ -8,9 +8,9 @@
 }
 
 .btn-container > button > img {
-  margin-left: -1px;
-  margin-top: -6px;
+  bottom: 2.5px;
   position: absolute;
+  right: 5px;
 }
 
 @media screen and (max-width: 599px) {
@@ -108,5 +108,19 @@
     height: 0;
     opacity: 0;
     transform: translateY(100vh);
+  }
+}
+
+.rendered {
+  animation: visible 1.25s ease-out 1 forwards;
+}
+
+@keyframes visible {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

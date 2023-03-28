@@ -1,4 +1,6 @@
 export { BtnContainer } from "./btn-container/BtnContainer";
+export { Error } from "./error/Error";
+export { MainContent } from "./main-content/MainContent";
 export { ProgressBar } from "./progress-bar/ProgressBar";
 export { QuestionBox } from "./question-box/QuestionBox";
 export { QuestionBoxHeading } from "./question-box-heading/QuestionBoxHeading";

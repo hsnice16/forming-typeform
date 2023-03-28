@@ -1,3 +1,4 @@
-export { QuestionOne } from "./QuestionOne";
-export { QuestionTwo } from "./QuestionTwo";
-export { QuestionZero } from "./QuestionZero";
+export { FirstNameInput } from "./FirstNameInput";
+export { IndustryInput } from "./IndustryInput";
+export { Intro } from "./Intro";
+export { LastNameInput } from "./LastNameInput";
