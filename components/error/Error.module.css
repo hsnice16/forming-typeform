@@ -1,0 +1,36 @@
+.error {
+  align-items: flex-end;
+  animation: slide-up 0.35s linear 1 forwards;
+  background-color: var(--error-background-color);
+  border-radius: 3px;
+  color: var(--error-text-color);
+  display: flex;
+  font-size: 1.5rem;
+  margin-top: 15px;
+  padding: 8px 12px;
+  width: max-content;
+}
+
+.error > img {
+  margin-right: 4px;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .error {
+    font-size: 1.75rem;
+    margin-top: 22px;
+    width: 100%;
+  }
+}

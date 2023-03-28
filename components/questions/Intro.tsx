@@ -6,20 +6,19 @@ import {
 } from "../index";
 import classNames from "classnames";
 import styles from "./Questions.module.css";
+import { QuestionProps } from "@/types";
 
-export type QuestionProps = {
-  readonly inView?: boolean;
-  readonly inViewSlide?: "up" | "down" | "";
-  readonly outView?: boolean;
-  readonly outViewSlide?: "up" | "down" | "";
+type Intro = QuestionProps & {
+  readonly isRendered: boolean;
 };
 
-export function QuestionZero({
+export function Intro({
   inView,
   inViewSlide,
   outView,
   outViewSlide,
-}: QuestionProps) {
+  isRendered,
+}: Intro) {
   return (
     <QuestionBox
       className={classNames({
@@ -29,6 +28,7 @@ export function QuestionZero({
         [styles["out-view__down"]]: outViewSlide === "down",
         [styles["in-view__up"]]: inViewSlide === "up",
         [styles["in-view__down"]]: inViewSlide === "down",
+        [styles["rendered"]]: isRendered,
       })}
     >
       <QuestionBoxHeading>

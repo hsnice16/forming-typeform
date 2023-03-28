@@ -12,6 +12,9 @@
 
   --dropdown-background-color: rgba(255, 255, 255, 0.1);
 
+  --error-background-color: rgb(247, 230, 230);
+  --error-text-color: rgb(175, 4, 4);
+
   --para-text-color: rgba(255, 255, 255, 0.7);
   --placeholder-color: rgba(255, 255, 255, 0.3);
 

@@ -1,5 +1,5 @@
 import { questrialFont } from "@/utils";
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, ForwardedRef, forwardRef } from "react";
 import styles from "./QuestionInputText.module.css";
 import classNames from "classnames";
 
@@ -10,23 +10,28 @@ type QuestionInputTextProps = {
   readonly onChange?: ChangeEventHandler<HTMLInputElement>;
 };
 
-export function QuestionInputText({
-  placeholder,
-  className,
-  value,
-  onChange,
-}: QuestionInputTextProps) {
-  return (
-    <input
-      className={classNames(
-        styles["question-input__text"],
-        questrialFont.className,
-        className
-      )}
-      type="text"
-      placeholder={placeholder ?? ""}
-      value={value}
-      onChange={onChange}
-    />
-  );
-}
+const QuestionInputText = forwardRef(
+  (
+    { placeholder, className, value, onChange }: QuestionInputTextProps,
+    ref: ForwardedRef<HTMLInputElement>
+  ) => {
+    return (
+      <input
+        ref={ref}
+        className={classNames(
+          styles["question-input__text"],
+          questrialFont.className,
+          className
+        )}
+        type="text"
+        placeholder={placeholder ?? ""}
+        value={value}
+        onChange={onChange}
+      />
+    );
+  }
+);
+
+QuestionInputText.displayName = "QuestionInputText";
+
+export { QuestionInputText };

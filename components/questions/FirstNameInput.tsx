@@ -1,5 +1,6 @@
 import {
   BtnContainer,
+  Error,
   QuestionBox,
   QuestionInputText,
   QuestionNumHeading,
@@ -7,21 +8,34 @@ import {
 import classNames from "classnames";
 import styles from "./Questions.module.css";
 import Image from "next/image";
-import { QuestionProps } from "./QuestionZero";
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, useEffect, useRef } from "react";
 import { SET_FIRST_NAME } from "@/reducers";
-import { useQuestionReducer } from "@/hooks";
+import { useQuestions } from "@/contexts";
+import { QuestionProps } from "@/types";
 
-export function QuestionOne({
+export function FirstNameInput({
   inView,
   inViewSlide,
   outView,
   outViewSlide,
+  errorMsg,
+  setErrorMsg,
 }: QuestionProps) {
-  const { state, dispatch } = useQuestionReducer();
+  const { state, dispatch } = useQuestions();
   const { firstName } = state;
+  const inputTextRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputTextRef.current?.focus();
+  }, []);
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    errorMsg &&
+      setErrorMsg &&
+      setErrorMsg((prevValue) => {
+        delete prevValue.firstName;
+        return prevValue;
+      });
     dispatch({ type: SET_FIRST_NAME, payload: event.target.value });
   };
 
@@ -44,20 +58,25 @@ export function QuestionOne({
         placeholder="Type your answer here..."
         value={firstName}
         onChange={handleInputChange}
+        ref={inputTextRef}
       />
 
-      <BtnContainer
-        className={classNames(styles["btn-container"], styles["ok"])}
-        showPressEnter={true}
-      >
-        OK{" "}
-        <Image
-          src="/check-small.svg"
-          alt="check small"
-          width={34}
-          height={34}
-        />
-      </BtnContainer>
+      {errorMsg && <Error message={errorMsg} />}
+
+      {errorMsg === "" && (
+        <BtnContainer
+          className={classNames(styles["btn-container"], styles["ok"])}
+          showPressEnter={true}
+        >
+          OK{" "}
+          <Image
+            src="/check-small.svg"
+            alt="check small"
+            width={34}
+            height={34}
+          />
+        </BtnContainer>
+      )}
     </QuestionBox>
   );
 }
