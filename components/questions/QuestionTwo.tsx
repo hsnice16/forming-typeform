@@ -1,30 +1,31 @@
 import {
   BtnContainer,
   QuestionBox,
-  QuestionInputText,
+  QuestionBoxPara,
+  QuestionInputIndustries,
   QuestionNumHeading,
 } from "../index";
 import classNames from "classnames";
 import styles from "./Questions.module.css";
 import Image from "next/image";
 import { QuestionProps } from "./QuestionZero";
-import { ChangeEventHandler } from "react";
-import { SET_FIRST_NAME } from "@/reducers";
-import { useQuestionReducer } from "@/hooks";
+import { Dispatch, SetStateAction } from "react";
 
-export function QuestionOne({
+export type IndustriesProps = {
+  showIndustriesList: boolean;
+  setShowIndustriesList: Dispatch<SetStateAction<boolean>>;
+};
+
+type QuestionTwoProps = QuestionProps & IndustriesProps;
+
+export function QuestionTwo({
   inView,
   inViewSlide,
   outView,
   outViewSlide,
-}: QuestionProps) {
-  const { state, dispatch } = useQuestionReducer();
-  const { firstName } = state;
-
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    dispatch({ type: SET_FIRST_NAME, payload: event.target.value });
-  };
-
+  showIndustriesList,
+  setShowIndustriesList,
+}: QuestionTwoProps) {
   return (
     <QuestionBox
       className={classNames({
@@ -36,19 +37,19 @@ export function QuestionOne({
         [styles["in-view__down"]]: inViewSlide === "down",
       })}
     >
-      <QuestionNumHeading questionNum={1}>
-        What&apos;s your first name? *
+      <QuestionNumHeading questionNum={2}>
+        What industry is your company in? *
       </QuestionNumHeading>
-
-      <QuestionInputText
-        placeholder="Type your answer here..."
-        value={firstName}
-        onChange={handleInputChange}
+      <QuestionBoxPara>
+        We will personalize your learning experience accordingly
+      </QuestionBoxPara>
+      <QuestionInputIndustries
+        showIndustriesList={showIndustriesList}
+        setShowIndustriesList={setShowIndustriesList}
       />
-
       <BtnContainer
         className={classNames(styles["btn-container"], styles["ok"])}
-        showPressEnter={true}
+        showPressEnter={false}
       >
         OK{" "}
         <Image

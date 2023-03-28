@@ -17,6 +17,10 @@
   .btn-container.ok {
     margin-top: 22px;
   }
+
+  .btn-container > button > img {
+    margin-top: -9px;
+  }
 }
 
 /* animation */

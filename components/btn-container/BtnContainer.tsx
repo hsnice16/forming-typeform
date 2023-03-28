@@ -5,10 +5,15 @@ import classNames from "classnames";
 
 type BtnContainerProps = {
   readonly children: ReactNode;
+  readonly showPressEnter: boolean;
   readonly className?: string;
 };
 
-export function BtnContainer({ children, className }: BtnContainerProps) {
+export function BtnContainer({
+  children,
+  showPressEnter,
+  className,
+}: BtnContainerProps) {
   const [isOnMobile, setIsOnMobile] = useState(false);
 
   useEffect(() => {
@@ -30,7 +35,7 @@ export function BtnContainer({ children, className }: BtnContainerProps) {
   return (
     <div className={classNames(styles["btn-container"], className)}>
       <button className={questrialFont.className}>{children}</button>
-      {isOnMobile || (
+      {isOnMobile || !showPressEnter || (
         <span>
           press <strong>Enter ↵</strong>
         </span>
