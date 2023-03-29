@@ -1,4 +1,8 @@
-import { QuestionInputText } from "../index";
+import {
+  DropdownSelect,
+  DropdownSelectOption,
+  QuestionInputText,
+} from "../index";
 import styles from "./QuestionInputIndustries.module.css";
 import classNames from "classnames";
 import Image from "next/image";
@@ -9,7 +13,6 @@ import {
   MouseEvent,
   SetStateAction,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -32,19 +35,27 @@ export function QuestionInputIndustries({
   const { industry } = state;
   const inputTextRef = useRef<HTMLInputElement>(null);
   const [localIndustry, setLocalIndustry] = useState(industry);
+  const [optionClicked, setOptionClicked] = useState(false);
+  const [filterIndustries, setFilteredIndustries] = useState<string[]>([]);
 
-  const filterIndustries = useMemo(() => {
-    return industries.filter((_industry) =>
-      _industry.toLowerCase().includes(industry.toLowerCase())
+  useEffect(() => {
+    if (optionClicked) {
+      return;
+    }
+
+    setFilteredIndustries(
+      industries.filter((_industry) =>
+        _industry.toLowerCase().includes(localIndustry.toLowerCase())
+      )
     );
-  }, [industries, industry]);
+  }, [industries, localIndustry, optionClicked]);
 
   useEffect(() => {
     inputTextRef.current?.focus();
   }, []);
 
   useEffect(() => {
-    if (industry && filterIndustries.length === 0) {
+    if (localIndustry && filterIndustries.length === 0) {
       setErrorMsg &&
         setErrorMsg((prevValue) => ({
           ...prevValue,
@@ -57,15 +68,16 @@ export function QuestionInputIndustries({
           return prevValue;
         });
     }
-  }, [filterIndustries.length, industry, setErrorMsg]);
+  }, [filterIndustries.length, localIndustry, setErrorMsg]);
 
   function handleDropdownClick(event: MouseEvent) {
     event.stopPropagation();
-    !industry && setShowIndustriesList(true);
+    setShowIndustriesList(true);
   }
 
   function handleInputChange(event: ChangeEvent) {
     const typedValue = (event.target as HTMLInputElement).value;
+    dispatch({ type: SET_INDUSTRY, payload: "" });
 
     if (typedValue) {
       setShowIndustriesList(true);
@@ -73,25 +85,35 @@ export function QuestionInputIndustries({
       setShowIndustriesList(false);
     }
 
-    dispatch({
-      type: SET_INDUSTRY,
-      payload: typedValue,
-    });
+    setLocalIndustry(typedValue);
   }
 
-  function handleCrossBtnClick() {
-    if (industry) {
-      setLocalIndustry("");
+  function handleUpArrowClick(event: MouseEvent) {
+    if (showIndustriesList) {
+      event.stopPropagation();
       setShowIndustriesList(false);
-      dispatch({ type: SET_INDUSTRY, payload: "" });
-      inputTextRef.current?.focus();
     }
+  }
+
+  function handleCrossBtnClick(event: MouseEvent) {
+    event.stopPropagation();
+    setLocalIndustry("");
+    setShowIndustriesList(false);
+    dispatch({ type: SET_INDUSTRY, payload: "" });
+    inputTextRef.current?.focus();
   }
 
   function handleDropdownOptionClick(_industry: string) {
     setLocalIndustry(_industry);
+    setOptionClicked(true);
 
     setTimeout(function () {
+      setErrorMsg &&
+        setErrorMsg((prevValue) => {
+          delete prevValue.industry;
+          return prevValue;
+        });
+      setOptionClicked(false);
       dispatch({ type: SET_INDUSTRY, payload: _industry });
       setShowIndustriesList(false);
     }, 500);
@@ -105,53 +127,42 @@ export function QuestionInputIndustries({
       <QuestionInputText
         className={styles["dropdown-select__input"]}
         placeholder="Type or select an option"
-        value={industry}
+        value={localIndustry}
         onChange={handleInputChange}
         ref={inputTextRef}
       />
 
       <button
         className={classNames(styles["dropdown-select__btn"], {
-          [styles["close"]]: !showIndustriesList && !industry,
+          [styles["close"]]: !showIndustriesList && !localIndustry,
         })}
-        onClick={handleCrossBtnClick}
+        onClick={localIndustry ? handleCrossBtnClick : handleUpArrowClick}
       >
         <Image
-          src={industry ? "/close.svg" : "/navigate-next.svg"}
+          src={localIndustry ? "/close.svg" : "/navigate-next.svg"}
           alt="dropdown arrow"
           width={26}
           height={26}
         />
       </button>
 
-      <div
+      <DropdownSelect
         className={classNames(styles["dropdown-select__options"], {
           [styles["show"]]: showIndustriesList && filterIndustries.length,
         })}
       >
         {filterIndustries.map(function (_industry) {
           return (
-            <span
+            <DropdownSelectOption
               key={_industry}
-              className={classNames(styles["dropdown-select__option"], {
-                [styles["animate"]]: localIndustry === _industry,
-                [styles["selected"]]: localIndustry === _industry,
-              })}
               onClick={() => handleDropdownOptionClick(_industry)}
+              isSelected={localIndustry === _industry && optionClicked}
             >
               {_industry}
-              {localIndustry === _industry && (
-                <Image
-                  src="/check-small.svg"
-                  alt="check small"
-                  width={30}
-                  height={30}
-                />
-              )}
-            </span>
+            </DropdownSelectOption>
           );
         })}
-      </div>
+      </DropdownSelect>
     </div>
   );
 }

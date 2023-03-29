@@ -3,25 +3,19 @@ import { ChangeEventHandler, useEffect, useRef } from "react";
 import {
   BtnContainer,
   Error,
-  QuestionBox,
   QuestionInputText,
   QuestionNumHeading,
 } from "../index";
 import classNames from "classnames";
-import styles from "./Questions.module.css";
+import styles from "./Question.module.css";
 import Image from "next/image";
-import { useQuestions } from "@/contexts";
-import { QuestionProps } from "@/types";
+import { useQuestions, useSharedStates } from "@/contexts";
 
-export function LastNameInput({
-  inView,
-  inViewSlide,
-  outView,
-  outViewSlide,
-  errorMsg,
-  setErrorMsg,
-}: QuestionProps) {
+export function LastNameInput() {
+  const { errorMsg: error, setErrorMsg } = useSharedStates();
   const { state, dispatch } = useQuestions();
+
+  const errorMsg = error.lastName ?? "";
   const { firstName, lastName } = state;
   const inputTextRef = useRef<HTMLInputElement>(null);
 
@@ -36,20 +30,12 @@ export function LastNameInput({
         delete prevValue.lastNamae;
         return prevValue;
       });
+
     dispatch({ type: SET_LAST_NAME, payload: event.target.value });
   };
 
   return (
-    <QuestionBox
-      className={classNames({
-        [styles["slide-out"]]: outView,
-        [styles["slide-in"]]: inView,
-        [styles["out-view__up"]]: outViewSlide === "up",
-        [styles["out-view__down"]]: outViewSlide === "down",
-        [styles["in-view__up"]]: inViewSlide === "up",
-        [styles["in-view__down"]]: inViewSlide === "down",
-      })}
-    >
+    <>
       <QuestionNumHeading questionNum={2}>
         and your last name, {firstName}? *
       </QuestionNumHeading>
@@ -77,6 +63,6 @@ export function LastNameInput({
           />
         </BtnContainer>
       )}
-    </QuestionBox>
+    </>
   );
 }

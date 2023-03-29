@@ -1,21 +1,6 @@
-import {
-  QuestionsActionsType,
-  questionsInitialState,
-  questionsReducerFunc,
-  QuestionsStateType,
-} from "@/reducers";
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  useContext,
-  useReducer,
-} from "react";
-
-type QuestionsContextType = {
-  state: QuestionsStateType;
-  dispatch: Dispatch<QuestionsActionsType>;
-};
+import { questionsInitialState, questionsReducerFunc } from "@/reducers";
+import { QuestionsContextType } from "@/types";
+import { createContext, ReactNode, useContext, useReducer } from "react";
 
 const QuestionsContext = createContext<QuestionsContextType>({
   state: questionsInitialState,
