@@ -1,11 +1,12 @@
 export { BtnContainer } from "./btn-container/BtnContainer";
+export { DropdownSelect } from "./dropdown-select/DropdownSelect";
+export { DropdownSelectOption } from "./dropdown-select-option/DropdownSelectOption";
 export { Error } from "./error/Error";
 export { MainContent } from "./main-content/MainContent";
 export { ProgressBar } from "./progress-bar/ProgressBar";
-export { QuestionBox } from "./question-box/QuestionBox";
+export { Question } from "./question/Question";
 export { QuestionBoxHeading } from "./question-box-heading/QuestionBoxHeading";
 export { QuestionBoxPara } from "./question-box-para/QuestionBoxPara";
 export { QuestionInputIndustries } from "./question-input-industries/QuestionInputIndustries";
 export { QuestionInputText } from "./question-input-text/QuestionInputText";
 export { QuestionNumHeading } from "./question-num-heading/QuestionNumHeading";
-export * from "./questions";

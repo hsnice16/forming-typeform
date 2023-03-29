@@ -1,0 +1,4 @@
+.dropdown-select__options {
+  background-color: var(--body-background-color);
+  margin-top: 8px;
+}

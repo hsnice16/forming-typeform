@@ -1,29 +1,18 @@
-import { TOTAL_QUESTIONS } from "@/constants";
-import { useQuestions } from "@/contexts";
-import { useEffect, useState } from "react";
-import {
-  FirstNameInput,
-  IndustryInput,
-  Intro,
-  LastNameInput,
-} from "../questions";
+import { useQuestions, useSharedStates } from "@/contexts";
+import { useEffect } from "react";
+import { Question } from "../index";
 
 export function MainContent() {
-  const [questionNum, setQuestionNum] = useState<{
-    prev: null | number;
-    now: number;
-  }>({
-    prev: null,
-    now: 0,
-  });
+  const {
+    questionNum,
+    handleQuestionNumUpdate,
+    setErrorMsg,
+    setShowIndustriesList,
+  } = useSharedStates();
+  const { state } = useQuestions();
 
   const { prev, now } = questionNum;
-  const {
-    state: { firstName, lastName },
-  } = useQuestions();
-
-  const [errorMsg, setErrorMsg] = useState<{ [key: string]: string }>({});
-  const [showIndustriesList, setShowIndustriesList] = useState(false);
+  const { firstName, lastName, industry, role } = state;
 
   useEffect(() => {
     function handleKeypress(event: KeyboardEvent) {
@@ -42,13 +31,21 @@ export function MainContent() {
             lastName: "Please fill this in",
           }));
           return;
+        } else if (now + 1 === 4 && industry === "") {
+          setErrorMsg((prevValue) => ({
+            ...prevValue,
+            industry: "Oops! Please make a selection",
+          }));
+          return;
+        } else if (now + 1 === 5 && role === "") {
+          setErrorMsg((prevValue) => ({
+            ...prevValue,
+            role: "Oops! Please make a selection",
+          }));
+          return;
         }
 
-        setQuestionNum((prevValue) =>
-          prevValue.now + 1 >= TOTAL_QUESTIONS + 1
-            ? { ...prevValue }
-            : { prev: prevValue.now, now: prevValue.now + 1 }
-        );
+        handleQuestionNumUpdate();
       }
     }
 
@@ -57,7 +54,9 @@ export function MainContent() {
     return function () {
       document.removeEventListener("keypress", handleKeypress);
     };
-  }, [firstName, lastName, now]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstName, industry, lastName, now, role]);
 
   useEffect(() => {
     function handleClick() {
@@ -69,12 +68,15 @@ export function MainContent() {
     return function () {
       document.removeEventListener("click", handleClick);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <section>
       <div>
-        <Intro
+        <Question
+          type="intro"
           outView={now - 1 === 0 || now > 1}
           outViewSlide="up"
           inView={now === 0}
@@ -83,37 +85,42 @@ export function MainContent() {
         />
 
         {[0, 2].includes(prev ?? -1) && [now - 1, now, now + 1].includes(1) && (
-          <FirstNameInput
+          <Question
+            type="firstName"
             outView={[now - 1, now + 1].includes(1)}
             outViewSlide={now - 1 === 1 ? "up" : "down"}
             inView={now === 1}
             inViewSlide={prev === 2 ? "down" : "up"}
-            errorMsg={errorMsg.firstName ?? ""}
-            setErrorMsg={setErrorMsg}
           />
         )}
 
         {[1, 3].includes(prev ?? 0) && [now - 1, now, now + 1].includes(2) && (
-          <LastNameInput
+          <Question
+            type="lastName"
             outView={[now - 1, now + 1].includes(2)}
             outViewSlide={now - 1 === 2 ? "up" : "down"}
             inView={now === 2}
             inViewSlide={prev === 3 ? "down" : "up"}
-            errorMsg={errorMsg.lastName ?? ""}
-            setErrorMsg={setErrorMsg}
           />
         )}
 
-        {prev === 2 && [now - 1, now, now + 1].includes(3) && (
-          <IndustryInput
+        {[2, 4].includes(prev ?? 0) && [now - 1, now, now + 1].includes(3) && (
+          <Question
+            type="industry"
             outView={[now - 1, now + 1].includes(3)}
             outViewSlide={now - 1 === 3 ? "up" : "down"}
             inView={now === 3}
+            inViewSlide={prev === 4 ? "down" : "up"}
+          />
+        )}
+
+        {prev === 3 && [now - 1, now, now + 1].includes(4) && (
+          <Question
+            type="role"
+            outView={[now - 1, now + 1].includes(4)}
+            outViewSlide={now - 1 === 4 ? "up" : "down"}
+            inView={now === 4}
             inViewSlide={"up"}
-            showIndustriesList={showIndustriesList}
-            setShowIndustriesList={setShowIndustriesList}
-            errorMsg={errorMsg.industry ?? ""}
-            setErrorMsg={setErrorMsg}
           />
         )}
       </div>

@@ -1,39 +1,26 @@
 import {
   BtnContainer,
   Error,
-  QuestionBox,
   QuestionBoxPara,
   QuestionInputIndustries,
   QuestionNumHeading,
 } from "../index";
 import classNames from "classnames";
-import styles from "./Questions.module.css";
+import styles from "./Question.module.css";
 import Image from "next/image";
-import { IndustriesProps, QuestionProps } from "@/types";
+import { useSharedStates } from "@/contexts";
 
-type IndustryInputProps = QuestionProps & IndustriesProps;
+export function IndustryInput() {
+  const {
+    showIndustriesList,
+    setShowIndustriesList,
+    setErrorMsg,
+    errorMsg: error,
+  } = useSharedStates();
+  const errorMsg = error.industry ?? "";
 
-export function IndustryInput({
-  inView,
-  inViewSlide,
-  outView,
-  outViewSlide,
-  showIndustriesList,
-  setShowIndustriesList,
-  errorMsg,
-  setErrorMsg,
-}: IndustryInputProps) {
   return (
-    <QuestionBox
-      className={classNames({
-        [styles["slide-out"]]: outView,
-        [styles["slide-in"]]: inView,
-        [styles["out-view__up"]]: outViewSlide === "up",
-        [styles["out-view__down"]]: outViewSlide === "down",
-        [styles["in-view__up"]]: inViewSlide === "up",
-        [styles["in-view__down"]]: inViewSlide === "down",
-      })}
-    >
+    <>
       <QuestionNumHeading questionNum={3}>
         What industry is your company in? *
       </QuestionNumHeading>
@@ -64,6 +51,6 @@ export function IndustryInput({
           />
         </BtnContainer>
       )}
-    </QuestionBox>
+    </>
   );
 }

@@ -4,7 +4,7 @@ import styles from "@/styles/Home.module.css";
 import { questrialFont } from "@/utils";
 import { MainContent, ProgressBar } from "@/components";
 import classNames from "classnames";
-import { QuestionsProvider } from "@/contexts";
+import { QuestionsProvider, SharedStatesProvider } from "@/contexts";
 
 export default function Home() {
   return (
@@ -28,9 +28,11 @@ export default function Home() {
         />
       </header>
       <main className={classNames(styles.main, questrialFont.className)}>
-        <QuestionsProvider>
-          <MainContent />
-        </QuestionsProvider>
+        <SharedStatesProvider>
+          <QuestionsProvider>
+            <MainContent />
+          </QuestionsProvider>
+        </SharedStatesProvider>
       </main>
     </>
   );
