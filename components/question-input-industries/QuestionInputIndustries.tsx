@@ -17,7 +17,7 @@ import {
   useState,
 } from "react";
 import { SET_INDUSTRY } from "@/reducers";
-import { useQuestions } from "@/contexts";
+import { useQuestions, useSharedStates } from "@/contexts";
 import { IndustriesProps, ObjectType } from "@/types";
 
 type QuestionInputIndustriesProps = IndustriesProps & {
@@ -31,6 +31,7 @@ export function QuestionInputIndustries({
 }: QuestionInputIndustriesProps) {
   const { industries } = useIndustries();
   const { state, dispatch } = useQuestions();
+  const { handleOkClick } = useSharedStates();
 
   const { industry } = state;
   const inputTextRef = useRef<HTMLInputElement>(null);
@@ -55,7 +56,11 @@ export function QuestionInputIndustries({
   }, []);
 
   useEffect(() => {
-    if (localIndustry && filterIndustries.length === 0) {
+    if (
+      localIndustry &&
+      filterIndustries.length === 0 &&
+      industry !== localIndustry
+    ) {
       setErrorMsg &&
         setErrorMsg((prevValue) => ({
           ...prevValue,
@@ -68,7 +73,7 @@ export function QuestionInputIndustries({
           return prevValue;
         });
     }
-  }, [filterIndustries.length, localIndustry, setErrorMsg]);
+  }, [filterIndustries.length, industry, localIndustry, setErrorMsg]);
 
   function handleDropdownClick(event: MouseEvent) {
     event.stopPropagation();
@@ -113,9 +118,11 @@ export function QuestionInputIndustries({
           delete prevValue.industry;
           return prevValue;
         });
+
       setOptionClicked(false);
       dispatch({ type: SET_INDUSTRY, payload: _industry });
       setShowIndustriesList(false);
+      setTimeout(() => handleOkClick(), 600);
     }, 500);
   }
 

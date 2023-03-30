@@ -1,5 +1,5 @@
 import { useSharedStates } from "@/contexts";
-import { useHandleKeypress } from "@/hooks";
+import { useHandleKeypress, useHandleScroll } from "@/hooks";
 import { useEffect } from "react";
 import { Question } from "../index";
 
@@ -8,6 +8,7 @@ export function MainContent() {
   const { prev, now } = questionNum;
 
   useHandleKeypress();
+  useHandleScroll();
 
   useEffect(() => {
     function handleClick() {
@@ -31,7 +32,7 @@ export function MainContent() {
           outView={now - 1 === 0 || now > 1}
           outViewSlide="up"
           inView={now === 0}
-          inViewSlide={prev === 1 ? "up" : ""}
+          inViewSlide={prev === 1 ? "down" : ""}
           isRendered={prev === null}
         />
 

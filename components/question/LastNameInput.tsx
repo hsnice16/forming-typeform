@@ -22,7 +22,7 @@ export function LastNameInput() {
     errorMsg &&
       setErrorMsg &&
       setErrorMsg((prevValue) => {
-        delete prevValue.lastNamae;
+        delete prevValue.lastName;
         return prevValue;
       });
 
