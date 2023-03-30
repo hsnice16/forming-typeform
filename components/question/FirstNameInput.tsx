@@ -7,21 +7,16 @@ import {
 import classNames from "classnames";
 import styles from "./Question.module.css";
 import Image from "next/image";
-import { ChangeEventHandler, useEffect, useRef } from "react";
+import { ChangeEventHandler } from "react";
 import { SET_FIRST_NAME } from "@/reducers";
 import { useQuestions, useSharedStates } from "@/contexts";
 
 export function FirstNameInput() {
-  const { errorMsg: error, setErrorMsg } = useSharedStates();
+  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates();
   const { state, dispatch } = useQuestions();
 
   const errorMsg = error.firstName ?? "";
   const { firstName } = state;
-  const inputTextRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    inputTextRef.current?.focus();
-  }, []);
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     errorMsg &&
@@ -44,7 +39,6 @@ export function FirstNameInput() {
         placeholder="Type your answer here..."
         value={firstName}
         onChange={handleInputChange}
-        ref={inputTextRef}
       />
 
       {errorMsg && <Error message={errorMsg} />}
@@ -53,6 +47,7 @@ export function FirstNameInput() {
         <BtnContainer
           className={classNames(styles["btn-container"], styles["ok"])}
           showPressEnter={true}
+          onClick={handleOkClick}
         >
           OK{" "}
           <Image

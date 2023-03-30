@@ -1,62 +1,13 @@
-import { useQuestions, useSharedStates } from "@/contexts";
+import { useSharedStates } from "@/contexts";
+import { useHandleKeypress } from "@/hooks";
 import { useEffect } from "react";
 import { Question } from "../index";
 
 export function MainContent() {
-  const {
-    questionNum,
-    handleQuestionNumUpdate,
-    setErrorMsg,
-    setShowIndustriesList,
-  } = useSharedStates();
-  const { state } = useQuestions();
-
+  const { questionNum, setShowIndustriesList } = useSharedStates();
   const { prev, now } = questionNum;
-  const { firstName, lastName, industry, role } = state;
 
-  useEffect(() => {
-    function handleKeypress(event: KeyboardEvent) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-
-        if (now + 1 === 2 && firstName === "") {
-          setErrorMsg((prevValue) => ({
-            ...prevValue,
-            firstName: "Please fill this in",
-          }));
-          return;
-        } else if (now + 1 === 3 && lastName === "") {
-          setErrorMsg((prevValue) => ({
-            ...prevValue,
-            lastName: "Please fill this in",
-          }));
-          return;
-        } else if (now + 1 === 4 && industry === "") {
-          setErrorMsg((prevValue) => ({
-            ...prevValue,
-            industry: "Oops! Please make a selection",
-          }));
-          return;
-        } else if (now + 1 === 5 && role === "") {
-          setErrorMsg((prevValue) => ({
-            ...prevValue,
-            role: "Oops! Please make a selection",
-          }));
-          return;
-        }
-
-        handleQuestionNumUpdate();
-      }
-    }
-
-    document.addEventListener("keypress", handleKeypress);
-
-    return function () {
-      document.removeEventListener("keypress", handleKeypress);
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstName, industry, lastName, now, role]);
+  useHandleKeypress();
 
   useEffect(() => {
     function handleClick() {
@@ -114,12 +65,32 @@ export function MainContent() {
           />
         )}
 
-        {prev === 3 && [now - 1, now, now + 1].includes(4) && (
+        {[3, 5].includes(prev ?? 0) && [now - 1, now, now + 1].includes(4) && (
           <Question
             type="role"
             outView={[now - 1, now + 1].includes(4)}
             outViewSlide={now - 1 === 4 ? "up" : "down"}
             inView={now === 4}
+            inViewSlide={prev === 5 ? "down" : "up"}
+          />
+        )}
+
+        {[4, 6].includes(prev ?? 0) && [now - 1, now, now + 1].includes(5) && (
+          <Question
+            type="goal"
+            outView={[now - 1, now + 1].includes(5)}
+            outViewSlide={now - 1 === 5 ? "up" : "down"}
+            inView={now === 5}
+            inViewSlide={prev === 6 ? "down" : "up"}
+          />
+        )}
+
+        {prev === 5 && [now - 1, now, now + 1].includes(6) && (
+          <Question
+            type="email"
+            outView={[now - 1, now + 1].includes(6)}
+            outViewSlide={now - 1 === 6 ? "up" : "down"}
+            inView={now === 6}
             inViewSlide={"up"}
           />
         )}

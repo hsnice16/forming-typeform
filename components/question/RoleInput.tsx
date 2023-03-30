@@ -14,7 +14,7 @@ import { ROLES } from "@/constants";
 import { SET_ROLE } from "@/reducers";
 
 export function RoleInput() {
-  const { errorMsg: error, setErrorMsg } = useSharedStates();
+  const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates();
   const { state, dispatch } = useQuestions();
 
   const errorMsg = error.role ?? "";
@@ -31,6 +31,7 @@ export function RoleInput() {
       dispatch({ type: SET_ROLE, payload: "" });
     } else {
       dispatch({ type: SET_ROLE, payload: _role });
+      setTimeout(() => handleOkClick(), 750);
     }
   }
 
@@ -76,6 +77,7 @@ export function RoleInput() {
         <BtnContainer
           className={classNames(styles["btn-container"], styles["ok"])}
           showPressEnter={false}
+          onClick={handleOkClick}
         >
           OK{" "}
           <Image

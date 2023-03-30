@@ -24,7 +24,7 @@
 
 .role-dropdown {
   display: inline-flex;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .role-dropdown .role-option {
@@ -37,7 +37,7 @@
   margin-right: -8px;
 }
 
-.role-option > span {
+.role-option > span:not(.goal) {
   align-items: center;
   background-color: var(--body-background-color);
   border: thin solid var(--para-text-color);
@@ -52,9 +52,30 @@
   width: 24px;
 }
 
-.role-option > span.selected {
+.role-option > span:not(.goal).selected {
   background-color: var(--btn-text-color);
   color: var(--body-background-color);
+}
+
+/***** goal-option *****/
+
+.role-dropdown.goal-dropdown.remove-margin__top {
+  margin-top: 0;
+}
+
+.role-dropdown.goal-dropdown > div {
+  width: 38rem;
+}
+
+.goal-option.not-selected {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.choose-num {
+  color: var(--btn-text-color);
+  display: block;
+  margin-top: 30px;
 }
 
 /***** media-queries *****/
@@ -69,6 +90,36 @@
   }
 }
 
+@media screen and (max-width: 403px) {
+  .role-dropdown.goal-dropdown > div {
+    width: 36rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .role-dropdown.goal-dropdown > div {
+    width: 100%;
+  }
+
+  .goal-option > span:not(.goal) {
+    align-self: flex-start;
+    margin-top: 7.5px;
+  }
+
+  .goal-option > .goal {
+    display: block;
+    line-height: 1.25em;
+    padding: 6px 0;
+    width: 27rem;
+  }
+}
+
+@media screen and (max-width: 368px) {
+  .goal-option > .goal {
+    width: 23rem;
+  }
+}
+
 /***** animation *****/
 
 .slide-in,
@@ -77,6 +128,8 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
+/***** slide-in-animation *****/
 
 .slide-in {
   animation-timing-function: ease-out;
@@ -109,6 +162,8 @@
     transform: translateY(0);
   }
 }
+
+/***** slide-out-animation *****/
 
 .slide-out {
   animation-timing-function: linear;
@@ -156,6 +211,8 @@
     transform: translateY(100vh);
   }
 }
+
+/***** rendered-animation  *****/
 
 .rendered {
   animation: visible 1.25s ease-out 1 forwards;
