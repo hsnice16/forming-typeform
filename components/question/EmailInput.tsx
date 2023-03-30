@@ -1,43 +1,51 @@
-import { SET_LAST_NAME } from "@/reducers";
-import { ChangeEventHandler } from "react";
+import { useQuestions, useSharedStates } from "@/contexts";
+import classNames from "classnames";
 import {
   BtnContainer,
   Error,
+  QuestionBoxPara,
   QuestionInputText,
   QuestionNumHeading,
 } from "../index";
-import classNames from "classnames";
-import styles from "./Question.module.css";
 import Image from "next/image";
-import { useQuestions, useSharedStates } from "@/contexts";
+import styles from "./Question.module.css";
+import { ChangeEventHandler } from "react";
+import { SET_EMAIL } from "@/reducers";
 
-export function LastNameInput() {
+export function EmailInput() {
   const { errorMsg: error, setErrorMsg, handleOkClick } = useSharedStates();
   const { state, dispatch } = useQuestions();
 
-  const errorMsg = error.lastName ?? "";
-  const { firstName, lastName } = state;
+  const errorMsg = error.email ?? "";
+  const { email } = state;
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     errorMsg &&
       setErrorMsg &&
       setErrorMsg((prevValue) => {
-        delete prevValue.lastNamae;
+        delete prevValue.email;
         return prevValue;
       });
 
-    dispatch({ type: SET_LAST_NAME, payload: event.target.value });
+    dispatch({ type: SET_EMAIL, payload: event.target.value });
   };
 
   return (
     <>
-      <QuestionNumHeading questionNum={2}>
-        and your last name, {firstName}? *
+      <QuestionNumHeading questionNum={6}>
+        Email you&apos;d like to register with? *
       </QuestionNumHeading>
 
+      <QuestionBoxPara>
+        We will keep all our communications with you through this email. Do
+        check your span inbox if you can&apos;t find our application received
+        email.
+      </QuestionBoxPara>
+
       <QuestionInputText
-        placeholder="Type your answer here..."
-        value={lastName}
+        type="email"
+        placeholder="name@example.com"
+        value={email}
         onChange={handleInputChange}
       />
 

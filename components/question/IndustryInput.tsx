@@ -16,6 +16,7 @@ export function IndustryInput() {
     setShowIndustriesList,
     setErrorMsg,
     errorMsg: error,
+    handleOkClick,
   } = useSharedStates();
   const errorMsg = error.industry ?? "";
 
@@ -41,6 +42,7 @@ export function IndustryInput() {
         <BtnContainer
           className={classNames(styles["btn-container"], styles["ok"])}
           showPressEnter={false}
+          onClick={handleOkClick}
         >
           OK{" "}
           <Image

@@ -3,6 +3,8 @@ export const questionsInitialState = {
   lastName: "",
   industry: "",
   role: "",
+  goals: [],
+  email: "",
 };
 
 export type QuestionsStateType = {
@@ -10,4 +12,6 @@ export type QuestionsStateType = {
   lastName: string;
   industry: string;
   role: string;
+  goals: string[];
+  email: string;
 };

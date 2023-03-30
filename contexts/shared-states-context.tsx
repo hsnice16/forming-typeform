@@ -10,6 +10,7 @@ const SharedStatesContext = createContext<SharedStatesContextType>({
   showIndustriesList: false,
   setShowIndustriesList: () => {},
   handleQuestionNumUpdate: () => {},
+  handleOkClick: () => {},
 });
 
 type SharedStatesProviderType = {
@@ -33,6 +34,14 @@ export function SharedStatesProvider({ children }: SharedStatesProviderType) {
     );
   }
 
+  function handleOkClick() {
+    document.dispatchEvent(
+      new KeyboardEvent("keypress", {
+        key: "Enter",
+      })
+    );
+  }
+
   const value = {
     questionNum,
     setQuestionNum,
@@ -41,6 +50,7 @@ export function SharedStatesProvider({ children }: SharedStatesProviderType) {
     showIndustriesList,
     setShowIndustriesList,
     handleQuestionNumUpdate,
+    handleOkClick,
   };
 
   return (
