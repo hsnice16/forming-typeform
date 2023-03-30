@@ -41,7 +41,7 @@ export function GoalInput() {
       dispatch({ type: SET_GOALS, payload: _goal });
 
       if (goals.length === 1) {
-        setTimeout(() => handleOkClick(), 750);
+        setTimeout(() => handleOkClick(), 600);
       }
     }
   }

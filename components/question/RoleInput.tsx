@@ -31,7 +31,7 @@ export function RoleInput() {
       dispatch({ type: SET_ROLE, payload: "" });
     } else {
       dispatch({ type: SET_ROLE, payload: _role });
-      setTimeout(() => handleOkClick(), 750);
+      setTimeout(() => handleOkClick(), 600);
     }
   }
 
