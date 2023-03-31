@@ -1,4 +1,5 @@
 import { useQuestions, useSharedStates } from "@/contexts";
+import { isNotValidEmail, isTaskSpecificEmail } from "@/utils";
 import { useEffect } from "react";
 
 export function useHandleKeypress() {
@@ -54,6 +55,23 @@ export function useHandleKeypress() {
           setErrorMsg((prevValue) => ({
             ...prevValue,
             email: "Please fill this in",
+          }));
+          return;
+        } else if (now + 1 === 7 && email && isNotValidEmail(email)) {
+          setErrorMsg((prevValue) => ({
+            ...prevValue,
+            email: "Hmm... that email doesn't look right",
+          }));
+          return;
+        } else if (
+          now + 1 === 7 &&
+          email &&
+          !isNotValidEmail(email) &&
+          isTaskSpecificEmail(email)
+        ) {
+          setErrorMsg((prevValue) => ({
+            ...prevValue,
+            email: "Hmm... task specific emails are not allowed",
           }));
           return;
         }

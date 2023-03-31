@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier:check": "prettier -c ./",
+    "format": "prettier -w ./",
+    "check": "yarn run format && yarn run prettier:check && yarn run lint",
+    "pre:commit": "yarn run check && git add .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@types/node": "18.15.8",
@@ -19,5 +24,11 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.0.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.57.0",
+    "@typescript-eslint/parser": "5.57.0",
+    "husky": "8.0.3",
+    "prettier": "2.8.7"
   }
 }

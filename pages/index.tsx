@@ -4,9 +4,11 @@ import styles from "@/styles/Home.module.css";
 import { questrialFont } from "@/utils";
 import { MainContent, ProgressBar } from "@/components";
 import classNames from "classnames";
-import { QuestionsProvider, SharedStatesProvider } from "@/contexts";
+import { SharedStatesProvider, useQuestions } from "@/contexts";
 
 export default function Home() {
+  const { percent } = useQuestions();
+
   return (
     <>
       <Head>
@@ -19,7 +21,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header className={styles.header}>
-        <ProgressBar />
+        <ProgressBar width={percent} />
         <Image
           src="/growth-x-logo.png"
           alt="GrowthX logo"
@@ -29,9 +31,7 @@ export default function Home() {
       </header>
       <main className={classNames(styles.main, questrialFont.className)}>
         <SharedStatesProvider>
-          <QuestionsProvider>
-            <MainContent />
-          </QuestionsProvider>
+          <MainContent />
         </SharedStatesProvider>
       </main>
     </>
