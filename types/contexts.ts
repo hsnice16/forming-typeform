@@ -9,6 +9,7 @@ import { ObjectType } from "./index";
 export type QuestionsContextType = {
   readonly state: QuestionsStateType;
   readonly dispatch: Dispatch<QuestionsActionsType>;
+  readonly percent: number;
 };
 
 /**

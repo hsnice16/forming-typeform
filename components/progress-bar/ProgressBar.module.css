@@ -19,5 +19,5 @@
 .progress-bar {
   background-color: var(--primary-color);
   height: 100%;
-  width: 0;
+  transition: width 0.5s;
 }

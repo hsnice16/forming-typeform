@@ -52,7 +52,9 @@ export function QuestionInputIndustries({
   }, [industries, localIndustry, optionClicked]);
 
   useEffect(() => {
-    inputTextRef.current?.focus();
+    setTimeout(() => {
+      inputTextRef.current?.focus();
+    }, 500);
   }, []);
 
   useEffect(() => {

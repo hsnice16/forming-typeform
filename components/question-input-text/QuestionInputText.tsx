@@ -25,7 +25,9 @@ const QuestionInputText = forwardRef(
     const inputTextRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-      inputTextRef.current?.focus();
+      setTimeout(() => {
+        inputTextRef.current?.focus();
+      }, 500);
     }, []);
 
     return (
