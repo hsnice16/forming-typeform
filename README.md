@@ -25,7 +25,3 @@ npm install
 ```
 npm run dev
 ```
-
----
-
-_Support this project - [buymeacoffee.com/hsnice16](https://www.buymeacoffee.com/hsnice16)_
