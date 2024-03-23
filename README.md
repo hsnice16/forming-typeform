@@ -39,5 +39,4 @@ npm run dev
 
 <img width="1440" alt="Screenshot 2024-02-24 at 2 18 07 PM" src="https://github.com/hsnice16/forming-typeform/assets/56081584/1d4aca2c-0b66-48d3-b123-bdccc770dadb">
 
-
 </details>
