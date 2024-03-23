@@ -7,11 +7,12 @@ import styles from "./QuestionInputIndustries.module.css";
 import classNames from "classnames";
 import Image from "next/image";
 import { useIndustries } from "@/hooks";
-import {
+import React, {
   ChangeEvent,
   Dispatch,
   MouseEvent,
   SetStateAction,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -19,6 +20,25 @@ import {
 import { SET_INDUSTRY } from "@/reducers";
 import { useQuestions, useSharedStates } from "@/contexts";
 import { IndustriesProps, ObjectType } from "@/types";
+
+const DropdownSelectOptionWrapper = React.memo(
+  function DropdownSelectOptionWrapper({
+    industry,
+    localIndustry,
+    optionClicked,
+    handleDropdownOptionClick,
+  }) {
+    return (
+      <DropdownSelectOption
+        key={industry}
+        onClick={() => handleDropdownOptionClick(industry)}
+        isSelected={localIndustry === industry && optionClicked}
+      >
+        {industry}
+      </DropdownSelectOption>
+    );
+  }
+);
 
 type QuestionInputIndustriesProps = IndustriesProps & {
   readonly setErrorMsg: Dispatch<SetStateAction<ObjectType>> | undefined;
@@ -82,18 +102,21 @@ export function QuestionInputIndustries({
     setShowIndustriesList(true);
   }
 
-  function handleInputChange(event: ChangeEvent) {
-    const typedValue = (event.target as HTMLInputElement).value;
-    dispatch({ type: SET_INDUSTRY, payload: "" });
+  const handleInputChange = useCallback(
+    function handleInputChange(event: ChangeEvent) {
+      const typedValue = (event.target as HTMLInputElement).value;
+      dispatch({ type: SET_INDUSTRY, payload: "" });
 
-    if (typedValue) {
-      setShowIndustriesList(true);
-    } else {
-      setShowIndustriesList(false);
-    }
+      if (typedValue) {
+        setShowIndustriesList(true);
+      } else {
+        setShowIndustriesList(false);
+      }
 
-    setLocalIndustry(typedValue);
-  }
+      setLocalIndustry(typedValue);
+    },
+    [dispatch, setShowIndustriesList]
+  );
 
   function handleUpArrowClick(event: MouseEvent) {
     if (showIndustriesList) {
@@ -110,23 +133,26 @@ export function QuestionInputIndustries({
     inputTextRef.current?.focus();
   }
 
-  function handleDropdownOptionClick(_industry: string) {
-    setLocalIndustry(_industry);
-    setOptionClicked(true);
+  const handleDropdownOptionClick = useCallback(
+    function handleDropdownOptionClick(_industry: string) {
+      setLocalIndustry(_industry);
+      setOptionClicked(true);
 
-    setTimeout(function () {
-      setErrorMsg &&
-        setErrorMsg((prevValue) => {
-          delete prevValue.industry;
-          return prevValue;
-        });
+      setTimeout(function () {
+        setErrorMsg &&
+          setErrorMsg((prevValue) => {
+            delete prevValue.industry;
+            return prevValue;
+          });
 
-      setOptionClicked(false);
-      dispatch({ type: SET_INDUSTRY, payload: _industry });
-      setShowIndustriesList(false);
-      setTimeout(() => handleOkClick(), 600);
-    }, 500);
-  }
+        setOptionClicked(false);
+        dispatch({ type: SET_INDUSTRY, payload: _industry });
+        setShowIndustriesList(false);
+        setTimeout(() => handleOkClick(), 600);
+      }, 500);
+    },
+    [dispatch, handleOkClick, setErrorMsg, setShowIndustriesList]
+  );
 
   return (
     <div
@@ -162,13 +188,20 @@ export function QuestionInputIndustries({
       >
         {filterIndustries.map(function (_industry) {
           return (
-            <DropdownSelectOption
+            // <DropdownSelectOption
+            //   key={_industry}
+            //   onClick={() => handleDropdownOptionClick(_industry)}
+            //   isSelected={localIndustry === _industry && optionClicked}
+            // >
+            //   {_industry}
+            // </DropdownSelectOption>
+            <DropdownSelectOptionWrapper
               key={_industry}
-              onClick={() => handleDropdownOptionClick(_industry)}
-              isSelected={localIndustry === _industry && optionClicked}
-            >
-              {_industry}
-            </DropdownSelectOption>
+              industry={_industry}
+              localIndustry={localIndustry}
+              optionClicked={optionClicked}
+              handleDropdownOptionClick={handleDropdownOptionClick}
+            />
           );
         })}
       </DropdownSelect>

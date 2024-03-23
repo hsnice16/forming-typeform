@@ -27,7 +27,7 @@ export function MainContent() {
   return (
     <section>
       <div>
-        <Question
+        {/* <Question
           type="intro"
           outView={now - 1 === 0 || now > 1}
           outViewSlide="up"
@@ -56,15 +56,15 @@ export function MainContent() {
           />
         )}
 
-        {[2, 4].includes(prev ?? 0) && [now - 1, now, now + 1].includes(3) && (
-          <Question
-            type="industry"
-            outView={[now - 1, now + 1].includes(3)}
-            outViewSlide={now - 1 === 3 ? "up" : "down"}
-            inView={now === 3}
-            inViewSlide={prev === 4 ? "down" : "up"}
-          />
-        )}
+        {[2, 4].includes(prev ?? 0) && [now - 1, now, now + 1].includes(3) && ( */}
+        <Question
+          type="industry"
+          outView={[now - 1, now + 1].includes(3)}
+          outViewSlide={now - 1 === 3 ? "up" : "down"}
+          inView={now === 3}
+          inViewSlide={prev === 4 ? "down" : "up"}
+        />
+        {/* )}
 
         {[3, 5].includes(prev ?? 0) && [now - 1, now, now + 1].includes(4) && (
           <Question
@@ -94,7 +94,7 @@ export function MainContent() {
             inView={now === 6}
             inViewSlide={"up"}
           />
-        )}
+        )} */}
       </div>
     </section>
   );

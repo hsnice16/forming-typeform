@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { TOTAL_QUESTIONS } from "@/constants";
 import { ObjectType, QuestionNumType, SharedStatesContextType } from "@/types";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
 const SharedStatesContext = createContext<SharedStatesContextType>({
   questionNum: { prev: null, now: 0 },
@@ -35,24 +42,27 @@ export function SharedStatesProvider({ children }: SharedStatesProviderType) {
     );
   }
 
-  function handleOkClick() {
+  const handleOkClick = useCallback(function handleOkClick() {
     document.dispatchEvent(
       new KeyboardEvent("keypress", {
         key: "Enter",
       })
     );
-  }
+  }, []);
 
-  const value = {
-    questionNum,
-    setQuestionNum,
-    errorMsg,
-    setErrorMsg,
-    showIndustriesList,
-    setShowIndustriesList,
-    handleQuestionNumUpdate,
-    handleOkClick,
-  };
+  const value = useMemo(
+    () => ({
+      questionNum,
+      setQuestionNum,
+      errorMsg,
+      setErrorMsg,
+      showIndustriesList,
+      setShowIndustriesList,
+      handleQuestionNumUpdate,
+      handleOkClick,
+    }),
+    [errorMsg, handleOkClick, questionNum, showIndustriesList]
+  );
 
   return (
     <SharedStatesContext.Provider value={value}>
