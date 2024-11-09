@@ -1,6 +1,6 @@
-# forming typeform
+# Forming Typeform
 
-a typeform clone
+A pretty cool typeform clone with all the animations that typeform supports. You can check the code, and use it.
 
 ---
 
@@ -27,6 +27,14 @@ npm run dev
 ```
 
 ---
+
+## 💚 Sponsor
+
+If you found this project helpful, then do consider sponsoring it - [Sponsor](https://github.com/sponsors/hsnice16)<br/>And, give it a star 🌟
+
+---
+
+## 👀 How it looks
 
 <img width="1440" alt="Screenshot 2024-02-24 at 2 16 49 PM" src="https://github.com/hsnice16/forming-typeform/assets/56081584/694f6715-38da-4c5a-9b7a-53d13c442593">
 
