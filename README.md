@@ -4,6 +4,9 @@
 
 ![Forks](https://img.shields.io/github/forks/hsnice16/forming-typeform)
 ![Stars](https://img.shields.io/github/stars/hsnice16/forming-typeform)
+![Next JS](https://img.shields.io/badge/nextjs-black?logo=next.js)
+![ReactJS](https://img.shields.io/badge/reactjs-gray?logo=react)
+![CSS 3](https://img.shields.io/badge/css3-1572B6?logo=css3)
 
 > A pretty cool typeform clone with all the animations that typeform supports. You can check the code, and use it.
 
