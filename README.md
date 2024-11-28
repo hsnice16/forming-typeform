@@ -5,7 +5,7 @@
 ![Forks](https://img.shields.io/github/forks/hsnice16/forming-typeform)
 ![Stars](https://img.shields.io/github/stars/hsnice16/forming-typeform)
 
-A pretty cool typeform clone with all the animations that typeform supports. You can check the code, and use it.
+> A pretty cool typeform clone with all the animations that typeform supports. You can check the code, and use it.
 
 </div>
 
